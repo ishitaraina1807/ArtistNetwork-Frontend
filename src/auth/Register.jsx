@@ -1,9 +1,7 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Register = () => {
-
     const [form, setForm] = useState({
         name: '',
         email: '',
@@ -12,6 +10,7 @@ const Register = () => {
         confirmPassword: ''
     });
     const [errors, setErrors] = useState({});
+    const [apiError, setApiError] = useState(null);
 
     const handleChange = (e) => {
         setForm({
@@ -25,7 +24,7 @@ const Register = () => {
         return re.test(String(email).toLowerCase());
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const newErrors = {};
 
@@ -43,11 +42,37 @@ const Register = () => {
         }
 
         if (Object.keys(newErrors).length === 0) {
-            alert('Form submitted successfully!');
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: form.name,
+                        username: form.username,
+                        email: form.email,
+                        password: form.password
+                    }),
+                });
+
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Registration successful!');
+                    // You might want to redirect the user or clear the form here
+                } else {
+                    setApiError(data.message || 'Registration failed');
+                }
+            } catch (error) {
+                setApiError('An error occurred. Please try again.');
+            }
         } else {
             setErrors(newErrors);
         }
     };
+
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -117,6 +142,7 @@ const Register = () => {
                         <p>Already have an account?</p>
                         <Link className='text-indigo-600 hover:text-indigo-400 hover:underline duration-200' to="/login">Login</Link>
                     </div>
+                    {apiError && <div className="text-red-500 text-sm mt-2">{apiError}</div>}
                     <div>
                         <button
                             type="submit"
@@ -131,4 +157,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Register;

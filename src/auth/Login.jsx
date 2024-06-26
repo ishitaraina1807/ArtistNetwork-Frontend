@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
-
     const [form, setForm] = useState({
         email: '',
         password: ''
     });
     const [errors, setErrors] = useState({});
+    const [apiError, setApiError] = useState(null);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setForm({
@@ -21,7 +22,7 @@ const Login = () => {
         return re.test(String(email).toLowerCase());
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const newErrors = {};
 
@@ -33,8 +34,37 @@ const Login = () => {
         if (!form.password) newErrors.password = 'Password is required';
 
         if (Object.keys(newErrors).length === 0) {
-            alert('Login successful!');
-        } else {
+            try {
+              const response = await fetch('http://localhost:5000/api/auth/login', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  email: form.email,
+                  password: form.password,
+                }),
+              });
+      
+              if (response.ok) {
+                const data = await response.json();
+                // Successful login
+                alert('Login successful!'); // Consider a better approach like showing a success message or redirecting
+                localStorage.setItem('token', data.token);
+                navigate('/profile'); // Redirect to profile or home page
+              } else {
+                // Login failed - handle specific errors based on response status code
+                const data = await response.json();
+                if (response.status === 400) {
+                  setApiError(data.message || 'Invalid email or password');
+                } else {
+                  setApiError('An error occurred. Please try again.');
+                }
+              }
+            } catch (error) {
+              setApiError('An error occurred. Please try again.');
+            }
+          } else {
             setErrors(newErrors);
         }
     };
@@ -72,6 +102,7 @@ const Login = () => {
                         <p>Don't have an account?</p>
                         <Link className='text-indigo-600 hover:text-indigo-400 hover:underline duration-200' to="/register">Register</Link>
                     </div>
+                    {apiError && <div className="text-red-500 text-sm mt-2">{apiError}</div>}
                     <div>
                         <button
                             type="submit"
@@ -83,7 +114,7 @@ const Login = () => {
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Login;
