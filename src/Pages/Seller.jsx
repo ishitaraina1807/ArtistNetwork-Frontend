@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Input from "../components/Input";
 
-axios.defaults.baseURL = "https://joyous-beret-worm.cyclic.app/";
-
+axios.defaults.baseURL = "http://localhost:4000";
 const SellForm = () => {
   const [itemName, setItemName] = useState("");
   const [itemDescription, setItemDescription] = useState("");

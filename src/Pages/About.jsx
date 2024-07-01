@@ -1,5 +1,5 @@
 import React from 'react';
-import CEO from '../Images/CEO.JPG';
+
 
 const AboutUs = () => {
   return (
@@ -22,7 +22,7 @@ const AboutUs = () => {
         </div>
         <div className="w-full lg:w-1/2 px-6">
           <div className="bg-white rounded-lg shadow-md p-4">
-            <img src={CEO} alt="DormDeals Team" className="w-full rounded-lg" />
+           
           </div>
         </div>
       </div>

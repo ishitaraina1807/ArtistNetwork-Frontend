@@ -5,7 +5,7 @@ import Input from "../components/Input";
 import { BlueButton } from "../components/Buttons";
 import { AuthContext } from "../Contexts/AuthContext";
 
-axios.defaults.baseURL = "https://joyous-beret-worm.cyclic.app";
+axios.defaults.baseURL = "http://localhost:4000";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,12 +19,11 @@ const Login = () => {
     setLoading(true);
     axios
       .post("/api/auth/login", { email, password })
-
       .then((res) => {
         console.log("Login Successful");
         dispatch({
           type: "LOGIN",
-          payload: { name: res.data.name, token: res.data.token },
+          payload: { name: res.data.name },
         });
         navigate("/dashboard");
         setEmail("");

@@ -1,5 +1,5 @@
 import { createContext, useEffect, useReducer } from "react";
-import ItemReducer from "./ItemReducer.js";
+import ItemReducer from "./ItemReducer.jsx";
 
 const INITIAL_STATE = {
   currentItem: JSON.parse(localStorage.getItem("item")) || null,

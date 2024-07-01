@@ -1,5 +1,5 @@
 import { createContext, useEffect, useReducer } from "react";
-import SearchReducer from "./SearchReducer.js";
+import SearchReducer from "./SearchReducer.jsx";
 
 const INITIAL_STATE = {
   currentSearch: null,

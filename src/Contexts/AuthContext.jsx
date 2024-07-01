@@ -1,5 +1,5 @@
 import { createContext, useEffect, useReducer } from "react";
-import AuthReducer from "./AuthReducer.js";
+import AuthReducer from "./AuthReducer.jsx";
 
 console.log(localStorage);
 

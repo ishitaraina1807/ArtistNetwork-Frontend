@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import { BlueButton } from "../components/Buttons";
 
-axios.defaults.baseURL = "http://localhost:4000";
-
+axios.defaults.baseURL = "http://localhost:4000"; 
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,25 +18,21 @@ const Signup = () => {
     setLoading(true);
     axios
       .post("/api/auth/signup", { name, email, password })
-
       .then((res) => {
-        alert(res.data.message);
+        alert("Signup successful. You can now log in.");
         console.log(res.data);
         setName("");
         setEmail("");
         setPassword("");
+        navigate("/login");
       })
       .catch((err) => {
         if (err.response && err.response.status === 400) {
-          // If the response status is 400, it's a duplicate user
           alert("User already exists. Please login.");
-          setName("");
-          setEmail("");
-          setPassword("");
-        } else if (err.response && err.response.status === 401) {
-          alert("Invalid Email");
         } else {
-          console.log(err);
+          console.error("Signup error:", err);
+          console.error("Error response:", err.response);
+          alert("An error occurred. Please try again.");
         }
       })
       .finally(() => {
