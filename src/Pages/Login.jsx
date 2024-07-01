@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/Input";
-import { BlueButton } from "../components/Buttons";
+import { MainButton2 } from "../components/Buttons";
 import { AuthContext } from "../Contexts/AuthContext";
 
 axios.defaults.baseURL = "http://localhost:4000";
@@ -39,26 +39,26 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Login</h2>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">Login to ArtistsNetwork</h2>
         <form onSubmit={handleLogin}>
+          <label htmlFor="email" className="block text-lg font-medium text-gray-700">Email</label>
           <Input
-            label="Email"
             type="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          <label htmlFor="password" className="block text-lg font-medium text-gray-700">Password</label>
           <Input
-            label="Password"
             type="password"
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className="text-center">
-            <BlueButton val="Login" loading={loading} />
+            <MainButton2 val="Login" loading={loading} />
           </div>
         </form>
         <p className="mt-4 text-center">

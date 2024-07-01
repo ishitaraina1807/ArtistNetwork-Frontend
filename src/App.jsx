@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from "./Pages/Landing";
 import Login from "./Pages/Login";

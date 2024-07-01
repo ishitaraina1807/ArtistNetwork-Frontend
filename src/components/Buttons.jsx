@@ -2,11 +2,11 @@ import React from "react";
 import { InfinitySpin, TailSpin } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 
-const WhiteButton = (props) => {
+const MainButton2 = (props) => {
   const navigate = useNavigate();
   return (
     <button
-      className="bg-white text-blue-500 text-lg font-semibold px-6 py-3 rounded-full hover:bg-blue-200 hover:text-blue-600 transition duration-300"
+    className="text-gray-800 text-sm font-bold tracking-widest px-6 py-1 border border-gray-800 border-2 hover:border-gray-400 hover:scale-110 transition duration-300 ease-in-out"
       onClick={() => navigate(props.navigation)}
     >
       {props.val}
@@ -14,12 +14,12 @@ const WhiteButton = (props) => {
   );
 };
 
-const YellowButton = (props) => {
+const MainButton = (props) => {
   const navigate = useNavigate();
 
   return (
     <button
-      className="bg-yellow-500 text-white text-lg font-semibold px-6 py-3 rounded-full hover:bg-yellow-600 transition duration-300"
+      className="text-white font-bold tracking-widest px-6 py-3 border border-white border-2 hover:border-gray-400 hover:scale-110 transition duration-300 ease-in-out"
       onClick={() => navigate(props.navigation)}
     >
       {props.val}
@@ -47,4 +47,4 @@ const BlueButton = (props) => {
   );
 };
 
-export { WhiteButton, YellowButton, BlueButton };
+export { MainButton2, MainButton, BlueButton };

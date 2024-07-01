@@ -1,0 +1,28 @@
+body{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.home-bg {
+    position: relative;
+    background-image: url('./Images/landing.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .home-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 0; 
+  }
+  
+  .home-bg .content {
+    position: relative;
+    z-index: 1; 
+  }
+  
+  
