@@ -1,5 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Playwrite+IT+Moderna:wght@100..400&display=swap');
+
 body{
     font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.underlined{
+  position: relative;
+}
+.underlined::after{
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: black;
+  transition: .5s;
+}
+.underlined:hover::after{
+  width: 100%
+}
+
+.cursive{
+  font-family: "Playwrite IT Moderna", cursive;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
 }
 
 .home-bg {

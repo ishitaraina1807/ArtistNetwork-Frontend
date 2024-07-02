@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaSearch, FaCaretDown, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { IoPersonOutline } from "react-icons/io5";
 import { SearchContext } from "../Contexts/SearchContext";
 
@@ -26,111 +26,45 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-gray-900 p-4 flex justify-between items-center relative"
-      style={{
-        borderBottom: '2px solid rgb(239, 68, 68)',
-      }}>
+      <nav className="bg-gray-100 p-6 flex justify-around items-center relative">
         {/* Left Section */}
-        <div className="text-white text-2xl font-bold ml-8 flex items-center">
-          DormDeals<span className="text-red-500 text-3xl">.</span>
+        <div className="text-black cursive text-xl font-bold ml-8 flex items-center">
+          ArtistsNetwork
         </div>
 
         <div
-          className={`flex-col md:flex-row justify-between items-center absolute md:static inset-x-0 top-full bg-gray-900 gap-2 py-2 md:py-0 ${
-            isDropdownOpen ? "flex" : "hidden md:flex"
-          }`}
+          className={`flex-col md:flex-row items-center absolute md:static inset-x-0 top-full gap-6 py-2 md:py-0 ${isDropdownOpen ? "flex" : "hidden md:flex"
+            }`}
         >
-          {/* Middle Section */}
-          <div className="md:w-1/4 flex">
-            <input
-              onChange={searchInputHandler}
-              type="text"
-              className="w-full px-2 py-1 border rounded-s-2xl"
-              placeholder="Search..."
-            />
-            <button
-              onClick={searchSubmitHandler}
-              className="px-4 bg-red-600 rounded-e-3xl"
-            >
-              <FaSearch className="text-white" />
-            </button>
-          </div>
-
           {/* Tab Section */}
-          <div className="flex justify-center space-y-2 md:space-x-4 md:space-y-0 relative flex-col md:flex-row items-center">
-            {/* Categories Dropdown Button */}
-            {/* <button
-            onClick={toggleDropdown}
-            className="text-white hover:text-red-500 px-4 transition duration-300 ease-in-out flex items-center"
-          >
-            Categories
-            <FaCaretDown className="ml-2" />
-          </button> */}
-            {/* {isDropdownOpen && (
-            <div className="absolute left-0 mt-8 w-48 bg-white border border-gray-300 rounded-lg shadow-md">
-              <ul className="py-2">
-                <li>
-                  <Link
-                    to="/dashboard"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                  >
-                    Electronics
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/dashboard"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                  >
-                    Electronics
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/dashboard"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                  >
-                    Electronics
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/dashboard"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                  >
-                    Electronics
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          )} */}
+          <div className="box flex justify-center space-y-2 md:space-x-8 md:space-y-0 relative flex-col md:flex-row items-center">
             <Link
               to="/dashboard"
-              className="text-white hover:text-red-500 px-4 transition duration-300 ease-in-out"
+              className="text-gray-900 underlined text-lg px-4"
             >
-              All Items
+              Gallery
             </Link>
             <Link
               to="/about"
-              className="text-white hover:text-red-500 px-4 transition duration-300 ease-in-out"
+              className="text-gray-900 underlined text-lg px-4"
             >
-              About us
+              Explore
             </Link>
             <Link
-              to="/dashboard/sell-item"
-              className="text-white bg-red-500 rounded-3xl hover:text-red-500 px-4 transition duration-300 ease-in-out"
+              to="/dashboard/profile"
+              className="text-gray-900 underlined text-lg px-4"
             >
-              Sell
+              Profile
             </Link>
           </div>
 
           {/* Right Section */}
-          <div className="text-white flex items-center">
-            <div className="rounded-full flex justify-center items-center h-8 w-8 ">
-              <IoPersonOutline />
-            </div>
-            <Link to="/dashboard/profile" className="hover:underline">
-              My Account
+          <div>
+            <Link
+              to="/dashboard/sell-item"
+              className="text-gray-900 text-lg border border-black px-4 py-1 hover:scale-110 hover:border-gray-400 transition duration-300 ease-in-out"
+            >
+              Post Artwork
             </Link>
           </div>
         </div>
@@ -141,8 +75,8 @@ const Navbar = () => {
           {isDropdownOpen ? <FaTimes /> : <FaBars />}
         </button>
       </nav>
-      
-      
+
+
     </>
   );
 };

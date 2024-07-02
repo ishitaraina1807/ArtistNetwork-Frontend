@@ -1,5 +1,5 @@
 import React from "react";
-import { WhiteButton, MainButton } from "../components/Buttons";
+import { MainButton } from "../components/Buttons";
 
 const LandingPage = () => {
   return (
