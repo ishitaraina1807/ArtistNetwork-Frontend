@@ -13,32 +13,27 @@ const ItemCard = (props) => {
   };
 
   return (
-
-    
     <div
       onClick={moreInfo}
-      className="bg-gray-100 hover:cursor-pointer shadow-lg rounded-lg overflow-hidden flex flex-col justify-center items-center hover:translate-y-[-5px] transition duration-300 ease-in-out w-50 p-2 m-5 mx-10"
+      className="relative hover:cursor-pointer overflow-hidden flex flex-col justify-center items-center my-6 mx-6"
     >
-      {/* Product Image(First image from the three uploaded ones) */}
+      {/* Product Image */}
       <img
         src={src}
         alt={props.rest.itemName}
-        className="w-full h-32 object-cover"
+        className="w-60 h-60 object-cover transition duration-300 ease-in-out"
       />
 
-      {/* Product Details */}
-      <div className="p-4 text-center">
+      {/* Overlay on hover */}
+      <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition duration-300 ease-in-out flex flex-col justify-center items-center text-white">
         {/* Product Name */}
-        <h2 className="text-gray-800 text-xl font-semibold">
+        <h2 className="text-lg font-semibold">
           {props.rest.itemName}
         </h2>
-        <hr />
-
-        {/* Product Price */}
-        <p className="mt-2 text-red-500">Rs. {props.rest.itemCost}</p>
-        <p>Provider : {props.rest.userName} </p>
+        <hr className="w-1/2 my-2" />
+        {/* Product Provider */}
+        <p>By: {props.rest.userName}</p>
       </div>
-      
     </div>
   );
 };

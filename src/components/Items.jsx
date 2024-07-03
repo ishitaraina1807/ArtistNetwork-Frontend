@@ -48,11 +48,12 @@ export default function Items() {
       ) : (
         <div>
           <Navbar />
-          <div className="p-5 flex flex-wrap px-10 justify-center md:justify-start">
+          <div className="p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {searchedItems.map((item) => (
               <ItemCard key={item._id} rest={item} />
             ))}
           </div>
+
         </div>
 
       )}
