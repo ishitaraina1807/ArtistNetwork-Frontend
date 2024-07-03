@@ -3,6 +3,7 @@ import ItemCard from "./ItemCard";
 import axios from "axios";
 import { SearchContext } from "../Contexts/SearchContext";
 import { InfinitySpin } from "react-loader-spinner";
+import Navbar from "./Navbar";
 
 export default function Items() {
   const [items, setItems] = useState([]);
@@ -45,11 +46,15 @@ export default function Items() {
           <InfinitySpin width="200" color="#424242" />
         </div>
       ) : (
-        <div className="p-5 flex flex-wrap px-10 justify-center md:justify-start">
-          {searchedItems.map((item) => (
-            <ItemCard key={item._id} rest={item} />
-          ))}
+        <div>
+          <Navbar />
+          <div className="p-5 flex flex-wrap px-10 justify-center md:justify-start">
+            {searchedItems.map((item) => (
+              <ItemCard key={item._id} rest={item} />
+            ))}
+          </div>
         </div>
+
       )}
     </>
   );

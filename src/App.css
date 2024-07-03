@@ -33,8 +33,14 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
   }
+  .dashboard-bg {
+    position: relative;
+    background-image: url('./Images/dashboard.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
   
-  .home-bg::before {
+  .dashboard-bg::before, .home-bg::before {
     content: "";
     position: absolute;
     top: 0;
@@ -45,9 +51,10 @@ body{
     z-index: 0; 
   }
   
-  .home-bg .content {
+  .dashboard-bg .content, .home-bg .content {
     position: relative;
     z-index: 1; 
   }
+  
   
   

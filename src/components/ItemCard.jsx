@@ -13,6 +13,8 @@ const ItemCard = (props) => {
   };
 
   return (
+
+    
     <div
       onClick={moreInfo}
       className="bg-gray-100 hover:cursor-pointer shadow-lg rounded-lg overflow-hidden flex flex-col justify-center items-center hover:translate-y-[-5px] transition duration-300 ease-in-out w-50 p-2 m-5 mx-10"
@@ -36,6 +38,7 @@ const ItemCard = (props) => {
         <p className="mt-2 text-red-500">Rs. {props.rest.itemCost}</p>
         <p>Provider : {props.rest.userName} </p>
       </div>
+      
     </div>
   );
 };

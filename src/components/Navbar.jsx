@@ -39,7 +39,7 @@ const Navbar = () => {
           {/* Tab Section */}
           <div className="box flex justify-center space-y-2 md:space-x-8 md:space-y-0 relative flex-col md:flex-row items-center">
             <Link
-              to="/dashboard"
+              to="/gallery"
               className="text-gray-900 underlined text-lg px-4"
             >
               Gallery

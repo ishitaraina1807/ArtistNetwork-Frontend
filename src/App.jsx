@@ -13,6 +13,7 @@ import About from "./Pages/About";
 import { AuthContext } from "./Contexts/AuthContext";
 import { ItemContextProvider } from "./Contexts/ItemContext";
 import { SearchContextProvider } from "./Contexts/SearchContext";
+import Items from "./components/Items";
 
 const App = () => {
   const { currentUser } = useContext(AuthContext);
@@ -43,6 +44,7 @@ const App = () => {
               <Route path="/dashboard/itemInfo" element={<ItemInfo />} />
               <Route path="/dashboard/sell-item" element={<Seller />} />
               <Route path="/dashboard/item/:id" element={<ItemInfo />} />
+              <Route path="/gallery" element={<Items/>} />
               <Route path="/about" element={<About />} />
             </Routes>
           </BrowserRouter>
