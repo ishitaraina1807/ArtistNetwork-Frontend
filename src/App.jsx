@@ -9,7 +9,7 @@ import Dashboard from "./Pages/Dashboard";
 import VerifyEmail from "./Pages/VerifyEmail";
 import ItemInfo from "./components/ItemInfo";
 import Seller from "./Pages/Seller";
-import About from "./Pages/About";
+import About from "./Pages/Explore";
 import { AuthContext } from "./Contexts/AuthContext";
 import { ItemContextProvider } from "./Contexts/ItemContext";
 import { SearchContextProvider } from "./Contexts/SearchContext";
@@ -45,7 +45,7 @@ const App = () => {
               <Route path="/dashboard/sell-item" element={<Seller />} />
               <Route path="/dashboard/item/:id" element={<ItemInfo />} />
               <Route path="/gallery" element={<Items/>} />
-              <Route path="/about" element={<About />} />
+              <Route path="/explore" element={<About />} />
             </Routes>
           </BrowserRouter>
         </SearchContextProvider>

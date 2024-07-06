@@ -4,6 +4,7 @@ import axios from "axios";
 import { SearchContext } from "../Contexts/SearchContext";
 import { InfinitySpin } from "react-loader-spinner";
 import Navbar from "./Navbar";
+import Masonry from "react-masonry-css";
 
 export default function Items() {
   const [items, setItems] = useState([]);
@@ -38,24 +39,32 @@ export default function Items() {
     }
   }, [currentSearch]);
 
+  const breakpointColumnsObj = {
+    default: 4,
+    1100: 3,
+    700: 2,
+    500: 1
+  };
+
   return (
     <>
-      {" "}
       {loading ? (
-        <div className="flex items-center justify-center h-96">
-          <InfinitySpin width="200" color="#424242" />
+        <div className=" flex items-center justify-center h-[100vh]">
+          <InfinitySpin width="160" color="black" />
         </div>
       ) : (
         <div>
           <Navbar />
-          <div className="p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="my-masonry-grid m-4"
+            columnClassName="my-masonry-grid_column"
+          >
             {searchedItems.map((item) => (
               <ItemCard key={item._id} rest={item} />
             ))}
-          </div>
-
+          </Masonry>
         </div>
-
       )}
     </>
   );

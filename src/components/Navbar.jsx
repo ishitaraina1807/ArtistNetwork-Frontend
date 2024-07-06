@@ -45,7 +45,7 @@ const Navbar = () => {
               Gallery
             </Link>
             <Link
-              to="/about"
+              to="/explore"
               className="text-gray-900 underlined text-lg px-4"
             >
               Explore

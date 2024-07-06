@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { MainButton } from "./Buttons";
 
 const ItemCard = (props) => {
   const navigate = useNavigate();
@@ -15,24 +16,28 @@ const ItemCard = (props) => {
   return (
     <div
       onClick={moreInfo}
-      className="relative hover:cursor-pointer overflow-hidden flex flex-col justify-center items-center my-6 mx-6"
+      className="relative hover:cursor-pointer rounded-xl overflow-hidden flex flex-col justify-center items-center my-3"
     >
       {/* Product Image */}
       <img
         src={src}
         alt={props.rest.itemName}
-        className="w-60 h-60 object-cover transition duration-300 ease-in-out"
+        className="w-full object-cover rounded-xl transition duration-300 ease-in-out"
+        style={{ maxHeight: "400px" }}
       />
 
       {/* Overlay on hover */}
       <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition duration-300 ease-in-out flex flex-col justify-center items-center text-white">
-        {/* Product Name */}
+        {/* Hover Text */}
         <h2 className="text-lg font-semibold">
-          {props.rest.itemName}
+          <MainButton val="view details" navigation=""/>
         </h2>
-        <hr className="w-1/2 my-2" />
-        {/* Product Provider */}
-        <p>By: {props.rest.userName}</p>
+      </div>
+
+      {/* Product Details */}
+      <div className="p-2 w-full text-left">
+        <h2 className="text-sm font-semibold">{props.rest.itemName}</h2>
+        <p className="text-sm">By: {props.rest.userName}</p>
       </div>
     </div>
   );
