@@ -4,10 +4,11 @@ import axios from "axios";
 import { AuthContext } from "../Contexts/AuthContext";
 import { InfinitySpin } from "react-loader-spinner";
 import ItemCard from "../components/ItemCard";
+import Navbar from "../components/Navbar";
+import { MainButton } from "../components/Buttons";
 
 const Profile = () => {
   const navigate = useNavigate();
-
   const [user, setUser] = useState();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,53 +41,52 @@ const Profile = () => {
   };
 
   return (
-    <div className="bg-gray-800">
-      <div className="max-w-5xl mx-auto min-h-screen bg-white p-6 rounded-lg shadow-md">
-        <h1 className="w-fit m-auto text-3xl text-white text-center font-semibold bg-red-500 rounded-xl py-2 px-5 ">
-          User Profile
-        </h1>
-
+    <div className="flex flex-col min-h-screen bg-gray-100">
+      <Navbar />
+      <div className="flex-grow container mx-auto px-4 py-8">
         {loading ? (
           <div className="flex items-center justify-center h-96">
-            <InfinitySpin width="200" color="#424242" />
+            <InfinitySpin width="200" color="#4B5563" />
           </div>
         ) : (
-          <div>
-            <div className="mt-4 text-xl flex justify-between text-red-600 font-semibold">
-              <div>
-                <span className="text-gray-800">Username : </span> {user.name}
+          <div className="bg-white shadow rounded-lg overflow-hidden">
+            <div className="px-6 py-8 border-b border-gray-200">
+              <div className="flex items-center">
+                <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200 mr-6">
+                  <img
+                    className="w-full h-full object-cover"
+                    src={`https://avatars.dicebear.com/api/initials/${user.name}.svg`}
+                    alt={user.name}
+                  />
+                </div>
+                <div>
+                  <h1 className="text-3xl font-bold text-gray-900 mb-1">{user.name}</h1>
+                  <p className="text-sm font-medium text-gray-500 mb-4">{user.email}</p>
+                  <div className="flex space-x-3">
+                    <MainButton val="Edit Profile" />
+                    <MainButton val="Log out" onClick={handleLogout} />
+                  </div>
+                </div>
               </div>
-              <button
-                className=" bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white text-base py-1 px-2 rounded-lg w-fit"
-                onClick={handleLogout}
-              >
-                Log out
-              </button>
             </div>
 
-            <div className="mt-2 text-xl text-red-600 font-semibold">
-              <span className="text-gray-800">Email : </span> {user.email}
-            </div>
-
-            <div className="mt-2 text-2xl text-gray-800 font-semibold">
-              <span>Your Listings : </span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {items.map((item) => (
-                <span
-                  key={item._id}
-                  className="flex flex-col bg-gray-200 pb-5 mt-4 rounded-lg"
-                >
-                  <ItemCard key={item._id} rest={item} />
-                  <button
-                    onClick={() => deleteItem(item._id)}
-                    className=" bg-red-500 text-white py-1 px-2 rounded-lg w-fit m-auto"
-                  >
-                    Delete item
-                  </button>
-                </span>
-              ))}
+            <div className="px-6 py-8">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-6">Your Artworks</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {items.map((item) => (
+                  <div key={item._id} className="bg-gray-50 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <ItemCard rest={item} />
+                    <div className="p-4 flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-500">{new Date(item.createdAt).toLocaleDateString()}</span>
+                      <MainButton 
+                        val="Delete" 
+                        onClick={() => deleteItem(item._id)}
+                        className="text-sm py-1 px-3"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
