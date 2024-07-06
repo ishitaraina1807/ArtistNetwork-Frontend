@@ -26,7 +26,7 @@ const VerifyEmail = () => {
   }, [token, navigate]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-96">
+    <div className="flex flex-col Artworks-center justify-center h-96">
       <p className=" text-4xl">Verifying your email</p>
       <InfinitySpin width="200" color="#424242" />
     </div>

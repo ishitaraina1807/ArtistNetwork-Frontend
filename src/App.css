@@ -66,7 +66,7 @@ body{
   background-clip: padding-box;
 }
 
-/* ItemCard adjustments */
+/* ArtworkCard adjustments */
 .my-masonry-grid_column > div {
   margin-bottom: 15px;
 }

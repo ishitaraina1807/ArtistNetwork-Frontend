@@ -13,7 +13,7 @@ export const SearchContextProvider = ({ children }) => {
   useEffect(() => {
     console.log("useEffect in SearchContextProvider is running");
     searchState.currentSearch &&
-      localStorage.setItem("search", JSON.stringify(searchState.currentSearch));
+      localStorage.setArtwork("search", JSON.stringify(searchState.currentSearch));
   }, [searchState.currentSearch]);  
 
   return (

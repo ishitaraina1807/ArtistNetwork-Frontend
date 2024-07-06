@@ -3,8 +3,8 @@ import { MainButton } from "../components/Buttons";
 
 const LandingPage = () => {
   return (
-    <div className="home-bg min-h-screen text-center flex justify-center items-center px-4">
-      <div className="content flex flex-col justify-center items-center">
+    <div className="home-bg min-h-screen text-center flex justify-center Artworks-center px-4">
+      <div className="content flex flex-col justify-center Artworks-center">
         <div className="text-white text-xs md:text-xl tracking-widest mb-6">
           Welcome To The World Of Art
         </div>
