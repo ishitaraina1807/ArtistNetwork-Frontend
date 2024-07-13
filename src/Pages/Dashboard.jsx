@@ -18,10 +18,10 @@ const Dashboard = () => {
           The People's Gallery
         </div>
         <div className="text-white w-2/3 font-semibold text-center md:text-3xl tracking-widest mb-8">
-        Showcase your art to the world and explore the work of other artists.
+        The Art Gallery with it’s unique collection is among those who love art and museums that attracts a wide array of people.
         </div>
         <div className="space-x-4">
-          <MainButton val="START EXPLORING" navigation="/signup" />
+          <MainButton val="START EXPLORING" navigation="/gallery" />
         </div>
       </div>
     </div>

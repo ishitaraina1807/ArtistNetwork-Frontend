@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import LandingPage from "./Pages/Landing";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import Profile from "./Pages/Profile";
@@ -28,12 +27,11 @@ const App = () => {
         <SearchContextProvider>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/verify-email" element={<VerifyEmail />} />
               <Route
-                path="/dashboard"
+                path="/"
                 element={
                   <RequireAuth>
                     <Dashboard />
@@ -42,7 +40,7 @@ const App = () => {
               />
               <Route path="/dashboard/profile" element={<Profile />} />
               <Route path="/dashboard/itemInfo" element={<ItemInfo />} />
-              <Route path="/dashboard/sell-item" element={<Seller />} />
+              <Route path="/dashboard/upload" element={<Seller />} />
               <Route path="/dashboard/item/:id" element={<ItemInfo />} />
               <Route path="/gallery" element={<Items/>} />
               <Route path="/explore" element={<About />} />

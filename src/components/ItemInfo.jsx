@@ -2,37 +2,38 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMapPin,
-  faPhoneVolume,
-  faUser,
-  faIndianRupeeSign,
-} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { InfinitySpin } from "react-loader-spinner";
+import Navbar from "./Navbar";
 
-axios.defaults.baseURL = "https://joyous-beret-worm.cyclic.app";
+axios.defaults.baseURL = "http://localhost:4000"; // Use http for local development
 
 const ItemInfo = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
-  const [item, setItem] = useState({});
+  const [item, setItem] = useState({
+    image: {},
+    itemName: "",
+    itemDescription: "",
+    userName: "",
+  });
+
   let blobURLs = [];
 
   useEffect(() => {
     axios
-      .post("/api/itemDetails", { id: id })
+      .post("/api/artworkDetails", { id: id })
       .then((res) => {
+        console.log(res.data); // Log the server response to inspect the data
         localStorage.setItem("item", JSON.stringify(res.data));
         setItem(res.data);
-        console.log(res.data);
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
-  }, []);
+  }, [id]);
 
   // Function to convert base64 string to ArrayBuffer
   function base64ToArrayBuffer(base64) {
@@ -45,16 +46,14 @@ const ItemInfo = () => {
     return bytes.buffer;
   }
 
-  // Map function to convert each image to a blob URL
-  if (!loading) {
-    blobURLs = item.images.map((img) => {
-      const base64Image = img.buffer;
-      const imageType = img.mimetype;
-      const arrayBuffer = base64ToArrayBuffer(base64Image);
-      const blob = new Blob([arrayBuffer], { type: imageType });
-      const blobUrl = URL.createObjectURL(blob);
-      return blobUrl;
-    });
+  // Convert the single image to a blob URL
+  if (!loading && item.image && item.image.buffer && item.image.mimetype) {
+    const base64Image = item.image.buffer;
+    const imageType = item.image.mimetype;
+    const arrayBuffer = base64ToArrayBuffer(base64Image);
+    const blob = new Blob([arrayBuffer], { type: imageType });
+    const blobUrl = URL.createObjectURL(blob);
+    blobURLs.push(blobUrl);
   }
 
   return (
@@ -64,89 +63,42 @@ const ItemInfo = () => {
           <InfinitySpin width="200" color="#424242" />
         </div>
       ) : (
-        <div className="overflow-hidden flex-col flex items-center h-screen justify-center bg-gray-800 ">
-          <div className=" items-start w-full m-5 px-14">
-            <Link
-              to="/dashboard"
-              onClick={() => {
-                localStorage.removeItem("item");
-              }}
-              className="text-white bg-red-500 rounded-3xl hover:bg-red-700 px-6 py-2 transition duration-300 ease-in-out"
-            >
-              Dashboard
-            </Link>
-          </div>
-          <div className="bg-white shadow-lg rounded-lg flex items-center mx-8 md:mx-14 flex-col md:flex-row">
-            {/* Image Carousel */}
+        <>
+          <Navbar />
+          <div className="flex flex-col md:flex-row items-center justify-center md:h-[90vh] md:px-20 px-2 gap-10">
+            <div className="w-full md:w-1/2">
             <Carousel
-              infiniteLoop
-              autoPlay
-              swipeable
-              onClickItem={(index) => {
-                window.open(blobURLs[index], "_blank");
-              }}
-              showArrows={true}
-              showThumbs={false}
-              className="md:w-1/4 p-2 cursor-pointer bg-gray-800 m-5"
-            >
-              <div>
-                <img
-                  src={blobURLs[0]}
-                  className=" h-40 object-cover"
-                  alt="Product"
-                />
-              </div>
-              <div>
-                <img
-                  src={blobURLs[1]}
-                  className="h-40 object-cover"
-                  alt="Product"
-                />
-              </div>
-              <div>
-                <img
-                  src={blobURLs[2]}
-                  className="h-40 object-cover"
-                  alt="Product"
-                />
-              </div>
-            </Carousel>
-            {/* Product Details */}
-            <div className="p-4 md:px-10 md:w-3/4 ">
-              {/* Product Name */}
-              <h2 className="text-2xl font-semibold">{item.itemName}</h2>
-
-              {/* Price */}
-              <p className="text-red-600 text-md mb-4">
-                {" "}
-                <FontAwesomeIcon icon={faIndianRupeeSign} /> {item.itemCost}
-              </p>
-              <hr />
-
-              {/* Description */}
-              <p className="text-gray-700 mt-2">{item.itemDescription}</p>
-
-              {/* Provider Details */}
-              <div className="mt-4">
-                <p className="font-semibold text-xl mb-3">Provider Details</p>
-                <p className="py-1 ">
-                  {" "}
-                  <FontAwesomeIcon icon={faUser} size="xl" />{" "}
-                  <span className="mx-2"> {item.userName} </span>
-                </p>
-                <p className="py-1 ">
-                  {" "}
-                  <FontAwesomeIcon icon={faPhoneVolume} fade size="xl" />{" "}
-                  <span className="mx-2"> {item.contactNumber}</span>
-                </p>
-                <p className="py-1 ">
-                  <FontAwesomeIcon icon={faMapPin} flip size="2xl" />{" "}
-                  <span className="mx-2">{item.pickupLocation}</span>
-                </p>
+                infiniteLoop
+                autoPlay
+                swipeable
+                onClickItem={(index) => {
+                  window.open(blobURLs[index], "_blank");
+                }}
+                showArrows={true}
+                showThumbs={false}
+                className="cursor-pointer"
+              >
+                {blobURLs.map((url, index) => (
+                  <div key={index} className="flex justify-center">
+                    <img
+                      src={url}
+                      className="h-[80vh] object-contain"
+                      alt={`Product ${index}`}
+                    />
+                  </div>
+                ))}
+              </Carousel>
+            </div>
+            <div className="w-full md:w-1/2 p-4 rounded-lg">
+              <div className="text-center mb-4">
+                <h2 className="text-2xl font-semibold uppercase">{item.title}</h2>
+                <span className="underline">Artwork by: {item.userName}</span>
+                <hr className="w-full mt-4 border-black" />
+                <p className="text-gray-700 text-2xl mt-4">{item.description}</p>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );
