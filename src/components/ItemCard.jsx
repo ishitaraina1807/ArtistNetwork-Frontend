@@ -27,7 +27,7 @@ const ItemCard = (props) => {
       />
 
       {/* Overlay on hover */}
-      <div className="absolute h-[88%] rounded-lg inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition duration-300 ease-in-out flex flex-col justify-center items-center text-white">
+      <div className="absolute h-[85%] rounded-lg inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition duration-300 ease-in-out flex flex-col justify-center items-center text-white">
         {/* Hover Text */}
         <h2 className="text-lg font-semibold">
           <MainButton val="view details" navigation=""/>
@@ -36,8 +36,8 @@ const ItemCard = (props) => {
 
       {/* Product Details */}
       <div className="p-2 w-full text-left">
-        <h2 className="text-sm font-semibold uppercase">{props.rest.title}</h2>
-        <p className="text-sm">{props.rest.userName}</p>
+        <h2 className="text-2xl font-semibold uppercase">{props.rest.title}</h2>
+        <p className="text-md">{props.rest.userName}</p>
       </div>
     </div>
   );
