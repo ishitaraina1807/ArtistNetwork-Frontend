@@ -26,18 +26,18 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-gray-100 p-6 flex justify-around Artworks-center relative">
+      <nav className="bg-gray-100 p-6 flex justify-around items-center relative">
         {/* Left Section */}
-        <div className="text-black cursive text-xl font-bold ml-8 flex Artworks-center">
+        <div className="text-black cursive text-xl font-bold ml-8 flex items-center">
           ArtistsNetwork
         </div>
 
         <div
-          className={`flex-col md:flex-row Artworks-center absolute md:static inset-x-0 top-full gap-6 py-2 md:py-0 ${isDropdownOpen ? "flex" : "hidden md:flex"
+          className={`flex-col md:flex-row items-center absolute md:static inset-x-0 top-full gap-6 py-2 md:py-0 ${isDropdownOpen ? "flex" : "hidden md:flex"
             }`}
         >
           {/* Tab Section */}
-          <div className="box flex justify-center space-y-2 md:space-x-8 md:space-y-0 relative flex-col md:flex-row Artworks-center">
+          <div className="box flex justify-center space-y-2 md:space-x-8 md:space-y-0 relative flex-col md:flex-row items-center">
             <Link
               to="/gallery"
               className="text-gray-900 underlined text-lg px-4"
@@ -61,7 +61,7 @@ const Navbar = () => {
           {/* Right Section */}
           <div>
             <Link
-              to="/dashboard/sell-Artwork"
+              to="/dashboard/sell-item"
               className="text-gray-900 text-lg border border-black px-4 py-1 hover:scale-110 hover:border-gray-400 transition duration-300 ease-in-out"
             >
               Post Artwork

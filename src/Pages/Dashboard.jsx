@@ -12,8 +12,8 @@ const Dashboard = () => {
       width:'100%'
   }}>
       <Navbar />
-      <div className="dashboard-bg h-[100vh] text-center flex justify-center Artworks-center px-4">
-      <div className="content flex flex-col justify-center Artworks-center">
+      <div className="dashboard-bg h-[100vh] text-center flex justify-center items-center px-4">
+      <div className="content flex flex-col justify-center items-center">
         <div className="text-white text-xs md:text-xl tracking-widest mb-6">
           The People's Gallery
         </div>

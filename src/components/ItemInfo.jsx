@@ -14,18 +14,18 @@ import { InfinitySpin } from "react-loader-spinner";
 
 axios.defaults.baseURL = "https://joyous-beret-worm.cyclic.app";
 
-const ArtworkInfo = () => {
+const ItemInfo = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
-  const [Artwork, setArtwork] = useState({});
+  const [item, setItem] = useState({});
   let blobURLs = [];
 
   useEffect(() => {
     axios
-      .post("/api/ArtworkDetails", { id: id })
+      .post("/api/itemDetails", { id: id })
       .then((res) => {
-        localStorage.setArtwork("Artwork", JSON.stringify(res.data));
-        setArtwork(res.data);
+        localStorage.setItem("item", JSON.stringify(res.data));
+        setItem(res.data);
         console.log(res.data);
         setLoading(false);
       })
@@ -47,7 +47,7 @@ const ArtworkInfo = () => {
 
   // Map function to convert each image to a blob URL
   if (!loading) {
-    blobURLs = Artwork.images.map((img) => {
+    blobURLs = item.images.map((img) => {
       const base64Image = img.buffer;
       const imageType = img.mimetype;
       const arrayBuffer = base64ToArrayBuffer(base64Image);
@@ -60,29 +60,29 @@ const ArtworkInfo = () => {
   return (
     <>
       {loading ? (
-        <div className="flex Artworks-center justify-center h-screen">
+        <div className="flex items-center justify-center h-screen">
           <InfinitySpin width="200" color="#424242" />
         </div>
       ) : (
-        <div className="overflow-hidden flex-col flex Artworks-center h-screen justify-center bg-gray-800 ">
-          <div className=" Artworks-start w-full m-5 px-14">
+        <div className="overflow-hidden flex-col flex items-center h-screen justify-center bg-gray-800 ">
+          <div className=" items-start w-full m-5 px-14">
             <Link
               to="/dashboard"
               onClick={() => {
-                localStorage.removeArtwork("Artwork");
+                localStorage.removeItem("item");
               }}
               className="text-white bg-red-500 rounded-3xl hover:bg-red-700 px-6 py-2 transition duration-300 ease-in-out"
             >
               Dashboard
             </Link>
           </div>
-          <div className="bg-white shadow-lg rounded-lg flex Artworks-center mx-8 md:mx-14 flex-col md:flex-row">
+          <div className="bg-white shadow-lg rounded-lg flex items-center mx-8 md:mx-14 flex-col md:flex-row">
             {/* Image Carousel */}
             <Carousel
               infiniteLoop
               autoPlay
               swipeable
-              onClickArtwork={(index) => {
+              onClickItem={(index) => {
                 window.open(blobURLs[index], "_blank");
               }}
               showArrows={true}
@@ -114,17 +114,17 @@ const ArtworkInfo = () => {
             {/* Product Details */}
             <div className="p-4 md:px-10 md:w-3/4 ">
               {/* Product Name */}
-              <h2 className="text-2xl font-semibold">{Artwork.ArtworkName}</h2>
+              <h2 className="text-2xl font-semibold">{item.itemName}</h2>
 
               {/* Price */}
               <p className="text-red-600 text-md mb-4">
                 {" "}
-                <FontAwesomeIcon icon={faIndianRupeeSign} /> {Artwork.ArtworkCost}
+                <FontAwesomeIcon icon={faIndianRupeeSign} /> {item.itemCost}
               </p>
               <hr />
 
               {/* Description */}
-              <p className="text-gray-700 mt-2">{Artwork.ArtworkDescription}</p>
+              <p className="text-gray-700 mt-2">{item.itemDescription}</p>
 
               {/* Provider Details */}
               <div className="mt-4">
@@ -132,16 +132,16 @@ const ArtworkInfo = () => {
                 <p className="py-1 ">
                   {" "}
                   <FontAwesomeIcon icon={faUser} size="xl" />{" "}
-                  <span className="mx-2"> {Artwork.userName} </span>
+                  <span className="mx-2"> {item.userName} </span>
                 </p>
                 <p className="py-1 ">
                   {" "}
                   <FontAwesomeIcon icon={faPhoneVolume} fade size="xl" />{" "}
-                  <span className="mx-2"> {Artwork.contactNumber}</span>
+                  <span className="mx-2"> {item.contactNumber}</span>
                 </p>
                 <p className="py-1 ">
                   <FontAwesomeIcon icon={faMapPin} flip size="2xl" />{" "}
-                  <span className="mx-2">{Artwork.pickupLocation}</span>
+                  <span className="mx-2">{item.pickupLocation}</span>
                 </p>
               </div>
             </div>
@@ -152,4 +152,4 @@ const ArtworkInfo = () => {
   );
 };
 
-export default ArtworkInfo;
+export default ItemInfo;

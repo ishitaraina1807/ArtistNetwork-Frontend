@@ -7,13 +7,13 @@ import Signup from "./Pages/Signup";
 import Profile from "./Pages/Profile";
 import Dashboard from "./Pages/Dashboard";
 import VerifyEmail from "./Pages/VerifyEmail";
-import ArtworkInfo from "./components/ArtworkInfo";
+import ItemInfo from "./components/ItemInfo";
 import Seller from "./Pages/Seller";
 import About from "./Pages/Explore";
 import { AuthContext } from "./Contexts/AuthContext";
-import { ArtworkContextProvider } from "./Contexts/ArtContext";
+import { ItemContextProvider } from "./Contexts/ItemContext";
 import { SearchContextProvider } from "./Contexts/SearchContext";
-import Artworks from "./components/Artworks";
+import Items from "./components/Items";
 
 const App = () => {
   const { currentUser } = useContext(AuthContext);
@@ -24,7 +24,7 @@ const App = () => {
 
   return (
     <div>
-      <ArtworkContextProvider>
+      <ItemContextProvider>
         <SearchContextProvider>
           <BrowserRouter>
             <Routes>
@@ -41,15 +41,15 @@ const App = () => {
                 }
               />
               <Route path="/dashboard/profile" element={<Profile />} />
-              <Route path="/dashboard/ArtworkInfo" element={<ArtworkInfo />} />
-              <Route path="/dashboard/sell-Artwork" element={<Seller />} />
-              <Route path="/dashboard/Artwork/:id" element={<ArtworkInfo />} />
-              <Route path="/gallery" element={<Artworks/>} />
+              <Route path="/dashboard/itemInfo" element={<ItemInfo />} />
+              <Route path="/dashboard/sell-item" element={<Seller />} />
+              <Route path="/dashboard/item/:id" element={<ItemInfo />} />
+              <Route path="/gallery" element={<Items/>} />
               <Route path="/explore" element={<About />} />
             </Routes>
           </BrowserRouter>
         </SearchContextProvider>
-      </ArtworkContextProvider>
+      </ItemContextProvider>
     </div>
   );
 };

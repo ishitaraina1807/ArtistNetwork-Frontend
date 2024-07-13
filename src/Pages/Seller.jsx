@@ -7,20 +7,16 @@ axios.defaults.baseURL = "http://localhost:4000";
 const PostArtworkForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
-  const [location, setLocation] = useState("");
-  const [cost, setCost] = useState("");
-  const [artworkType, setArtworkType] = useState("");
-  const [images, setImages] = useState([]);
+  const [tags, setTags] = useState("");
+  const [image, setImage] = useState(null);
 
   const handleImageUpload = (e) => {
-    const selectedImages = Array.from(e.target.files);
-    console.log(selectedImages);
-    setImages((prevImages) => [...prevImages, ...selectedImages]);
+    const selectedImage = e.target.files[0];
+    setImage(selectedImage);
   };
 
-  const clearUploads = () => {
-    setImages([]);
+  const clearUpload = () => {
+    setImage(null);
   };
 
   const handleSubmit = async (e) => {
@@ -30,37 +26,28 @@ const PostArtworkForm = () => {
 
     formData.append(
       "userToken",
-      JSON.parse(localStorage.getArtwork("details")).token
+      JSON.parse(localStorage.getItem("details")).token
     );
     formData.append(
       "userName",
-      JSON.parse(localStorage.getArtwork("details")).name
+      JSON.parse(localStorage.getItem("details")).name
     );
     formData.append("title", title);
-    formData.append("cost", cost);
     formData.append("description", description);
-    formData.append("contactNumber", contactNumber);
-    formData.append("location", location);
-    formData.append("artworkType", artworkType);
-
-    Array.from(images).forEach((file) => {
-      formData.append("images", file);
-    });
+    formData.append("tags", tags);
+    formData.append("image", image);
 
     console.log("Form Data to be sent:", ...formData);
 
     try {
-      const response = await axios.post("/api/sell", formData);
+      const response = await axios.post("/api/upload", formData);
 
       console.log("Response from server:", response.data);
 
       setTitle("");
-      setCost("");
       setDescription("");
-      setContactNumber("");
-      setLocation("");
-      setArtworkType("");
-      setImages([]);
+      setTags("");
+      setImage(null);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -80,7 +67,7 @@ const PostArtworkForm = () => {
         </h2>
         <form
           onSubmit={handleSubmit}
-          action="/api/sell"
+          action="/api/upload"
           method="post"
           encType="multipart/form-data"
         >
@@ -101,8 +88,6 @@ const PostArtworkForm = () => {
             >
               Description (300 words max)
             </label>
-          </div>
-          <div className="mb-4">
             <textarea
               name="description"
               id="description"
@@ -114,63 +99,56 @@ const PostArtworkForm = () => {
             ></textarea>
           </div>
           <div className="mb-4">
-            <label htmlFor="artworkType">Artwork Type</label>
-            <select
-              name="artworkType"
-              className="w-full p-2 rounded-lg"
-              value={artworkType}
-              onChange={(e) => setArtworkType(e.target.value)}
-            >
-              <option value="">Select artwork type</option>
-              <option value="Water painting">Water painting</option>
-              <option value="Acrylic painting">Acrylic painting</option>
-              <option value="Oil painting">Oil painting</option>
-              <option value="Graphite">Graphite</option>
-              <option value="Colored pencil">Colored pencil</option>
-              <option value="Markers">Markers</option>
-            </select>
+            <label htmlFor="tags">Tags (comma-separated)</label>
+            <Input
+              name="tags"
+              type="text"
+              placeholder="painting, abstract, modern"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+            />
           </div>
           <div className="mb-4">
             <label
-              htmlFor="images"
+              htmlFor="image"
               className="block text-black text-sm mb-2"
             >
               Add Image of your artwork
             </label>
-            <button
-              htmlFor="images"
-              className="border border-black border-2 hover:border-gray-600 px-3 py-2 rounded-lg cursor-pointer transition duration-100 ease-in-out"
-            >
-              Upload Images
-            </button>
-            <button
-              className="border border-red-600 text-red-600 border-2 ml-8 hover:border-red-400 hover:text-red-400 px-3 py-2 rounded-lg cursor-pointer transition duration-100 ease-in-out"
-              onClick={clearUploads}
-            >
-              Clear Uploads
-            </button>
             <input
               type="file"
-              name="images"
-              id="images"
+              name="image"
+              id="image"
               className="hidden"
               accept="image/*"
-              multiple
               onChange={handleImageUpload}
             />
-            {images.length > 0 && (
+            <button
+              type="button"
+              onClick={() => document.getElementById('image').click()}
+              className="border border-black border-2 hover:border-gray-600 px-3 py-2 rounded-lg cursor-pointer transition duration-100 ease-in-out"
+            >
+              Upload Image
+            </button>
+            {image && (
+              <button
+                type="button"
+                className="border border-red-600 text-red-600 border-2 ml-8 hover:border-red-400 hover:text-red-400 px-3 py-2 rounded-lg cursor-pointer transition duration-100 ease-in-out"
+                onClick={clearUpload}
+              >
+                Clear Upload
+              </button>
+            )}
+            {image && (
               <div className="mt-2">
                 <p className="font-semibold text-black text-sm mb-2 mt-5">
-                  Uploaded Images:
+                  Uploaded Image:
                 </p>
-                {images.map((image, index) => (
-                  <img
-                    key={index}
-                    src={URL.createObjectURL(image)}
-                    alt={`Uploaded ${index + 1}`}
-                    className="mt-2 max-h-40"
-                  />
-                ))}
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt="Uploaded artwork"
+                  className="mt-2 max-h-40"
+                />
               </div>
             )}
           </div>

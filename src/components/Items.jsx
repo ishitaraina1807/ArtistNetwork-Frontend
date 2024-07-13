@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import ArtworkCard from "./ArtworkCard";
+import ItemCard from "./ItemCard";
 import axios from "axios";
 import { SearchContext } from "../Contexts/SearchContext";
 import { InfinitySpin } from "react-loader-spinner";
 import Navbar from "./Navbar";
 import Masonry from "react-masonry-css";
 
-export default function Artworks() {
-  const [Artworks, setArtworks] = useState([]);
+export default function Items() {
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchedArtworks, setSearchedArtworks] = useState([]);
+  const [searchedItems, setSearchedItems] = useState([]);
   const { currentSearch } = useContext(SearchContext);
 
   axios.defaults.baseURL = "http://localhost:4000/";
@@ -18,9 +18,9 @@ export default function Artworks() {
     axios
       .get("/api/dashboard")
       .then((res) => {
-        setArtworks(res.data);
-        setSearchedArtworks(res.data);
-        console.log("In Artworks rendered on dashboard : ", res.data);
+        setItems(res.data);
+        setSearchedItems(res.data);
+        console.log("In Items rendered on dashboard : ", res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -29,13 +29,13 @@ export default function Artworks() {
   }, []);
 
   useEffect(() => {
-    if (Artworks) {
-      const filteredArtworks = Artworks.filter((Artwork) => {
-        return Artwork.ArtworkName
+    if (items) {
+      const filteredItems = items.filter((item) => {
+        return item.itemName
           .toLowerCase()
           .includes(currentSearch.value.toLowerCase());
       });
-      setSearchedArtworks(filteredArtworks);
+      setSearchedItems(filteredItems);
     }
   }, [currentSearch]);
 
@@ -49,7 +49,7 @@ export default function Artworks() {
   return (
     <>
       {loading ? (
-        <div className=" flex Artworks-center justify-center h-[100vh]">
+        <div className=" flex items-center justify-center h-[100vh]">
           <InfinitySpin width="160" color="black" />
         </div>
       ) : (
@@ -60,8 +60,8 @@ export default function Artworks() {
             className="my-masonry-grid m-4"
             columnClassName="my-masonry-grid_column"
           >
-            {searchedArtworks.map((Artwork) => (
-              <ArtworkCard key={Artwork._id} rest={Artwork} />
+            {searchedItems.map((item) => (
+              <ItemCard key={item._id} rest={item} />
             ))}
           </Masonry>
         </div>

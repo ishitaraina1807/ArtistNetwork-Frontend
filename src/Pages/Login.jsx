@@ -20,18 +20,45 @@ const Login = () => {
     axios
       .post("/api/auth/login", { email, password })
       .then((res) => {
-        console.log("Login Successful");
-        dispatch({
-          type: "LOGIN",
-          payload: { name: res.data.name },
-        });
+        console.log("Full server response:", res);
+        console.log("Response data:", res.data);
+        const { name, token } = res.data;
+        
+        if (!token) {
+          console.warn("Token not received from server. Using name for authentication.");
+          localStorage.setItem('details', JSON.stringify({ name }));
+          
+          dispatch({
+            type: "LOGIN",
+            payload: { name },
+          });
+        } else {
+          console.log("Received token:", token);
+          localStorage.setItem('token', token);
+          localStorage.setItem('details', JSON.stringify({ name }));
+          
+          dispatch({
+            type: "LOGIN",
+            payload: { name, token },
+          });
+        }
+        
         navigate("/dashboard");
         setEmail("");
         setPassword("");
       })
       .catch((err) => {
-        console.log(err);
-        alert(err.response.data.message);
+        console.error("Login error:", err);
+        if (err.response) {
+          console.error("Error response:", err.response.data);
+          console.error("Error status:", err.response.status);
+          console.error("Error headers:", err.response.headers);
+        } else if (err.request) {
+          console.error("Error request:", err.request);
+        } else {
+          console.error("Error message:", err.message);
+        }
+        alert(err.response?.data?.message || err.message || "An error occurred during login");
       })
       .finally(() => {
         setLoading(false);
@@ -39,7 +66,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex Artworks-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Login to ArtistsNetwork</h2>
         <form onSubmit={handleLogin}>
