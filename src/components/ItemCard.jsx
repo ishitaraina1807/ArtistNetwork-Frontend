@@ -2,15 +2,39 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { MainButton } from "./Buttons";
 
-const ItemCard = (props) => {
+const ItemCard = ({ rest }) => {
   const navigate = useNavigate();
 
-  const base64Image = props.rest.image.buffer;
-  const imageType = props.rest.image.mimetype;
-  const src = `data:${imageType};base64,${base64Image}`;
+  // Check if rest exists before trying to access its properties
+  if (!rest) {
+    console.error("ItemCard received undefined props");
+    return null; // or return a placeholder component
+  }
 
-  const moreInfo = async () => {
-    navigate(`/dashboard/item/${props.rest._id}`);
+  let src;
+  if (rest.image) {
+    if (rest.image.buffer && rest.image.mimetype) {
+      const base64Image = rest.image.buffer;
+      const imageType = rest.image.mimetype;
+      src = `data:${imageType};base64,${base64Image}`;
+    } else if (typeof rest.image === 'string') {
+      // If image is already a string (URL or base64), use it directly
+      src = rest.image;
+    } else {
+      console.warn("Unexpected image data structure:", rest.image);
+      src = 'path/to/placeholder-image.jpg';
+    }
+  } else {
+    console.warn("No image data for artwork:", rest.title);
+    src = 'path/to/placeholder-image.jpg';
+  }
+
+  const moreInfo = () => {
+    if (rest._id) {
+      navigate(`/dashboard/item/${rest._id}`);
+    } else {
+      console.error("No _id available for this artwork");
+    }
   };
 
   return (
@@ -21,7 +45,7 @@ const ItemCard = (props) => {
       {/* Product Image */}
       <img
         src={src}
-        alt={props.rest.title}
+        alt={rest.title || 'Artwork'}
         className="w-full object-cover rounded-xl transition duration-300 ease-in-out"
         style={{ maxHeight: "400px" }}
       />
@@ -36,8 +60,8 @@ const ItemCard = (props) => {
 
       {/* Product Details */}
       <div className="p-2 w-full text-left">
-        <h2 className="text-2xl font-semibold uppercase">{props.rest.title}</h2>
-        <p className="text-md">{props.rest.userName}</p>
+        <h2 className="text-2xl font-semibold uppercase">{rest.title || 'Untitled'}</h2>
+        <p className="text-md">{rest.userName || 'Unknown Artist'}</p>
       </div>
     </div>
   );

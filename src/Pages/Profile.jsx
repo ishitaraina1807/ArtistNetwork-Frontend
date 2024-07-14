@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../Contexts/AuthContext";
 import { InfinitySpin } from "react-loader-spinner";
-import ArtworkCard from "../components/ItemCard";
+import ItemCard from "../components/ItemCard";
 import Navbar from "../components/Navbar";
 import { MainButton } from "../components/Buttons";
 
@@ -12,44 +12,38 @@ const Profile = () => {
   const [user, setUser] = useState(null);
   const [artworks, setArtworks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { currentUser, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
+    const details = JSON.parse(localStorage.getItem('details'));
+    if (!details || !details.name) {
       navigate('/login');
       return;
     }
   
     const fetchData = async () => {
       try {
-        const userResponse = await axios.post("/api/profile", { token });
-        if (userResponse.data && userResponse.data!== "") {
+        const userResponse = await axios.post("/api/profile", { name: details.name });
+        if (userResponse.data) {
           setUser(userResponse.data);
+          console.log(details.name);
         } else {
           console.error("No user data returned from API");
-          console.error("API Response:", userResponse);
-          if (userResponse.status === 200) {
-            console.error("API returned an empty response");
-          }
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        if (error.response && error.response.status === 401) {
+        if (error.response && error.response.status === 404) {
+          console.error("User not found");
           handleLogout();
         }
       }
     
       try {
-        const artworksResponse = await axios.post("/api/artworksByUser", { token });
-        if (artworksResponse.data && artworksResponse.data!== "") {
+        const artworksResponse = await axios.post("/api/artworksByUser", { name: details.name });
+        if (artworksResponse.data) {
           setArtworks(artworksResponse.data);
         } else {
           console.error("No artworks returned from API");
-          console.error("API Response:", artworksResponse);
-          if (artworksResponse.status === 200) {
-            console.error("API returned an empty response");
-          }
         }
       } catch (error) {
         console.error("Error fetching artworks:", error);
@@ -59,12 +53,13 @@ const Profile = () => {
     };
   
     fetchData();
-  }, [navigate]);
+  }, [navigate, dispatch]);
 
   const deleteArtwork = async (id) => {
-    const token = localStorage.getItem('token');
+    const details = JSON.parse(localStorage.getItem('details'));
     try {
-      await axios.post("/api/deleteArtwork", { id, token });
+      await axios.post("/api/deleteArtwork", { id, name: details.name });
+      console.log(details.name);
       setArtworks(artworks.filter((artwork) => artwork._id !== id));
     } catch (error) {
       console.error("Error deleting artwork:", error);
@@ -72,7 +67,6 @@ const Profile = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
     localStorage.removeItem("details");
     dispatch({ type: "LOGOUT" });
     navigate("/login");
@@ -124,7 +118,7 @@ const Profile = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {artworks.map((artwork) => (
                 <div key={artwork._id} className="bg-gray-50 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-                  <ArtworkCard artwork={artwork} />
+                  <ItemCard rest={artwork} />
                   <div className="p-4 flex justify-between items-center">
                     <span className="text-sm font-medium text-gray-500">{new Date(artwork.createdAt).toLocaleDateString()}</span>
                     <MainButton 

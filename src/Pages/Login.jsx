@@ -22,26 +22,14 @@ const Login = () => {
       .then((res) => {
         console.log("Full server response:", res);
         console.log("Response data:", res.data);
-        const { name, token } = res.data;
+        const { name } = res.data;
         
-        if (!token) {
-          console.warn("Token not received from server. Using name for authentication.");
-          localStorage.setItem('details', JSON.stringify({ name }));
-          
-          dispatch({
-            type: "LOGIN",
-            payload: { name },
-          });
-        } else {
-          console.log("Received token:", token);
-          localStorage.setItem('token', token);
-          localStorage.setItem('details', JSON.stringify({ name }));
-          
-          dispatch({
-            type: "LOGIN",
-            payload: { name, token },
-          });
-        }
+        localStorage.setItem('details', JSON.stringify({ name }));
+        
+        dispatch({
+          type: "LOGIN",
+          payload: { name },
+        });
         
         navigate("/dashboard");
         setEmail("");
