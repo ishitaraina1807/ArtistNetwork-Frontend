@@ -31,7 +31,7 @@ const Login = () => {
           payload: { name },
         });
         
-        navigate("/dashboard");
+        navigate("/gallery");
         setEmail("");
         setPassword("");
       })
