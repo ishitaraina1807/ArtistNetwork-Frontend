@@ -8,7 +8,7 @@ import Dashboard from "./Pages/Dashboard";
 import VerifyEmail from "./Pages/VerifyEmail";
 import ItemInfo from "./components/ItemInfo";
 import Seller from "./Pages/Seller";
-import About from "./Pages/Explore";
+import Explore from "./Pages/Explore";
 import { AuthContext } from "./Contexts/AuthContext";
 import { ItemContextProvider } from "./Contexts/ItemContext";
 import { SearchContextProvider } from "./Contexts/SearchContext";
@@ -38,12 +38,54 @@ const App = () => {
                   </RequireAuth>
                 }
               />
-              <Route path="/dashboard/profile" element={<Profile />} />
-              <Route path="/dashboard/itemInfo" element={<ItemInfo />} />
-              <Route path="/dashboard/upload" element={<Seller />} />
-              <Route path="/dashboard/item/:id" element={<ItemInfo />} />
-              <Route path="/gallery" element={<Items/>} />
-              <Route path="/explore" element={<About />} />
+              <Route
+                path="/dashboard/profile"
+                element={
+                  <RequireAuth>
+                    <Profile />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/dashboard/itemInfo"
+                element={
+                  <RequireAuth>
+                    <ItemInfo />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/dashboard/upload"
+                element={
+                  <RequireAuth>
+                    <Seller />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/dashboard/item/:id"
+                element={
+                  <RequireAuth>
+                    <ItemInfo />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/gallery"
+                element={
+                  <RequireAuth>
+                    <Items />
+                  </RequireAuth>
+                }
+              />
+              <Route 
+              path="/explore"
+               element={
+                <RequireAuth>
+                <Explore/>
+              </RequireAuth>
+               } 
+               />
             </Routes>
           </BrowserRouter>
         </SearchContextProvider>

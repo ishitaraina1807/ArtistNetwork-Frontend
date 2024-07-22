@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import { MainButton2 } from "../components/Buttons";
-import { AuthContext } from "../Contexts/AuthContext";
+import { AuthContext } from "../Auth/AuthContext";
 
 axios.defaults.baseURL = "https://artists-network-backend.vercel.app";
 
@@ -14,43 +14,29 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    axios
-      .post("/api/auth/login", { email, password })
-      .then((res) => {
-        console.log("Full server response:", res);
-        console.log("Response data:", res.data);
-        const { name } = res.data;
-        
-        localStorage.setItem('details', JSON.stringify({ name }));
-        
-        dispatch({
-          type: "LOGIN",
-          payload: { name },
-        });
-        
-        navigate("/gallery");
-        setEmail("");
-        setPassword("");
-      })
-      .catch((err) => {
-        console.error("Login error:", err);
-        if (err.response) {
-          console.error("Error response:", err.response.data);
-          console.error("Error status:", err.response.status);
-          console.error("Error headers:", err.response.headers);
-        } else if (err.request) {
-          console.error("Error request:", err.request);
-        } else {
-          console.error("Error message:", err.message);
-        }
-        alert(err.response?.data?.message || err.message || "An error occurred during login");
-      })
-      .finally(() => {
-        setLoading(false);
+    try {
+      const res = await axios.post("/api/auth/login", { email, password });
+      console.log("Full server response:", res);
+      console.log("Response data:", res.data);
+      const { name } = res.data;
+      localStorage.setItem('details', JSON.stringify({ name }));
+      dispatch({
+        type: "LOGIN",
+        payload: { name },
       });
+      console.log("Navigating to /gallery");
+      navigate("/gallery");
+      setEmail("");
+      setPassword("");
+    } catch (err) {
+      console.error("Login error:", err);
+      alert(err.response?.data?.message || err.message || "An error occurred during login");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
