@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Input from "../components/Input";
 
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = "https://artists-network-backend.vercel.app";
 
 const PostArtworkForm = () => {
   const [title, setTitle] = useState("");

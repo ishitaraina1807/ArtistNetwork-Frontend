@@ -12,7 +12,7 @@ export default function Items() {
   const [searchedItems, setSearchedItems] = useState([]);
   const { currentSearch } = useContext(SearchContext);
 
-  axios.defaults.baseURL = "http://localhost:4000/";
+  axios.defaults.baseURL = "https://artists-network-backend.vercel.app/";
 
   useEffect(() => {
     axios

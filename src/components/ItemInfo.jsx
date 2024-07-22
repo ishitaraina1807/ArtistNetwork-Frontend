@@ -6,7 +6,7 @@ import axios from "axios";
 import { InfinitySpin } from "react-loader-spinner";
 import Navbar from "./Navbar";
 
-axios.defaults.baseURL = "http://localhost:4000"; // Use http for local development
+axios.defaults.baseURL = "https://artists-network-backend.vercel.app"; // Use http for local development
 
 const ItemInfo = () => {
   const { id } = useParams();

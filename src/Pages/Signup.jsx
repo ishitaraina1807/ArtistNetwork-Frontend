@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import { MainButton2 } from "../components/Buttons";
 
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = "https://artists-network-backend.vercel.app";
 
 const Signup = () => {
   const navigate = useNavigate();
