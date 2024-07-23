@@ -5,9 +5,8 @@ import { SearchContext } from "../Contexts/SearchContext";
 import { InfinitySpin } from "react-loader-spinner";
 import Navbar from "./Navbar";
 import Masonry from "react-masonry-css";
-import Category from "./Category";
 
-export default function Items() {
+export default function CategoryGallery() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchedItems, setSearchedItems] = useState([]);
@@ -56,7 +55,6 @@ export default function Items() {
       ) : (
         <div>
           <Navbar />
-          <Category/>
           <Masonry
             breakpointCols={breakpointColumnsObj}
             className="my-masonry-grid m-4"
