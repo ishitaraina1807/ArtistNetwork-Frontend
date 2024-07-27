@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import ItemCard from "./ItemCard";
 import axios from "axios";
 import { SearchContext } from "../Contexts/SearchContext";
@@ -11,6 +12,7 @@ export default function CategoryGallery() {
   const [loading, setLoading] = useState(true);
   const [searchedItems, setSearchedItems] = useState([]);
   const { currentSearch } = useContext(SearchContext);
+  const { category } = useParams(); // Extract the tag from the URL
 
   axios.defaults.baseURL = "https://artists-network-backend.vercel.app/";
 
@@ -18,26 +20,28 @@ export default function CategoryGallery() {
     axios
       .get("/api/dashboard")
       .then((res) => {
-        setItems(res.data);
-        setSearchedItems(res.data);
-        console.log("In Items rendered on dashboard : ", res.data);
+        const filteredItems = res.data.filter((item) =>
+          item.tags.includes(category) // Filter items based on the tag
+        );
+        setItems(filteredItems);
+        setSearchedItems(filteredItems);
+        console.log("In Items rendered on dashboard : ", filteredItems);
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [category]);
 
   useEffect(() => {
     if (items) {
-      const filteredItems = items.filter((item) => {
-        return item.itemName
-          .toLowerCase()
-          .includes(currentSearch.value.toLowerCase());
-      });
+      const searchValue = currentSearch?.value?.toLowerCase() || ""; // Handle null or undefined values
+      const filteredItems = items.filter((item) => 
+        item.title.toLowerCase().includes(searchValue)
+      );
       setSearchedItems(filteredItems);
     }
-  }, [currentSearch]);
+  }, [currentSearch, items]);
 
   const breakpointColumnsObj = {
     default: 4,
@@ -49,7 +53,7 @@ export default function CategoryGallery() {
   return (
     <>
       {loading ? (
-        <div className=" flex items-center justify-center h-[100vh]">
+        <div className="flex items-center justify-center h-[100vh]">
           <InfinitySpin width="160" color="black" />
         </div>
       ) : (
