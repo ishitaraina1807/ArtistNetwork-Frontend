@@ -7,7 +7,7 @@ import Profile from "./Pages/Profile";
 import Dashboard from "./Pages/Dashboard";
 import VerifyEmail from "./Pages/VerifyEmail";
 import ItemInfo from "./components/ItemInfo";
-import Seller from "./Pages/Seller";
+import Seller from "./Pages/Upload";
 import Explore from "./Pages/Explore";
 import { AuthContext } from "./Contexts/AuthContext";
 import { ItemContextProvider } from "./Contexts/ItemContext";
