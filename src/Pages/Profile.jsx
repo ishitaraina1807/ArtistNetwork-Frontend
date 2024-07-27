@@ -5,7 +5,6 @@ import { AuthContext } from "../Contexts/AuthContext";
 import { InfinitySpin } from "react-loader-spinner";
 import ItemCard from "../components/ItemCard";
 import Navbar from "../components/Navbar";
-import { MainButton } from "../components/Buttons";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
@@ -94,7 +93,7 @@ const Profile = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Navbar />
-      <div className="flex-grow bg-white  container mx-auto px-4 py-8">
+      <div className="flex-grow bg-white container mx-auto px-4 py-8">
         <div className="rounded-lg overflow-hidden">
           <div className="px-6 py-8 border-b border-gray-300">
             <div className="flex flex-col items-center">
@@ -118,21 +117,25 @@ const Profile = () => {
 
           <div className="px-6 py-8">
             <h2 className="text-2xl text-center underline font-semibold text-gray-800 mb-6">Your Artworks</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {artworks.map((artwork) => (
-                <div key={artwork._id} className="bg-gray-50 rounded-md overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-                  <ItemCard rest={artwork} />
-                  <div className="p-1 flex justify-between items-center">
-                    <button
-                      onClick={() => deleteArtwork(artwork._id)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      Delete Post
-                    </button>
+            {artworks.length === 0 ? (
+              <p className="text-center text-gray-500">You have no artworks uploaded.</p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {artworks.map((artwork) => (
+                  <div key={artwork._id} className="bg-gray-50 rounded-md overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <ItemCard rest={artwork} />
+                    <div className="p-1 flex justify-between items-center">
+                      <button
+                        onClick={() => deleteArtwork(artwork._id)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        Delete Post
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
