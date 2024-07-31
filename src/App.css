@@ -70,6 +70,12 @@ body{
 .my-masonry-grid_column > div {
   margin-bottom: 15px;
 }
+.sticky{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 
 
   

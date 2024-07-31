@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import { MainButton } from "../components/Buttons";
 import Category from "../components/Category";
+import Landing from "../Images/Landing.png"
 
 const Dashboard = () => {
   
@@ -23,18 +24,18 @@ const Dashboard = () => {
             Experience the beauty of art through the eyes of artists from various genres and styles.
           </div>
           <div className="space-x-4">
-            <MainButton val="START EXPLORING" navigation="/gallery" />
+            <MainButton val="START EXPLORING" navigation="/explore" />
           </div>
         </div>
       </div>
       <div className="h-[100vh]">
         <div className="flex justify-center items-center h-full">
-          <h1 className="text-2xl w-1/2 text-center font-bold my-16">The Art Gallery with it’s unique collection is among those who love art and museums that attracts a wide array of people.</h1>
+          <h1 className="text-2xl md:w-1/2  text-center font-bold my-16">The Art Gallery with it’s unique collection is among those who love art and museums that attracts a wide array of people.</h1>
         </div>
       </div>
       <Category/>
+      <img src={Landing} alt="img" />
     </div>
-
   );
 };
 

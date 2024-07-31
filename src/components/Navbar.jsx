@@ -21,7 +21,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-gray-100 p-6 flex justify-between items-center relative z-50">
+      <nav className="bg-gray-100 sticky p-6 flex justify-between items-center relative z-50">
         {/* Left Section */}
         <Link to="/" className="text-black cursive text-xl font-bold ml-8 flex items-center">
           ArtistsNetwork
