@@ -28,7 +28,7 @@ const Login = () => {
         payload: { name },
       });
       console.log("Navigating to /gallery");
-      navigate("/gallery"); // Ensure this is called after successful login
+      navigate("/gallery");
       setEmail("");
       setPassword("");
     } catch (err) {

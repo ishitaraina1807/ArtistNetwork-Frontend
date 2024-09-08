@@ -88,44 +88,61 @@ const Signup = () => {
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Signup to ArtistsNetwork</h2>
         <form onSubmit={handleSignup}>
-          <label htmlFor="name" className="block text-lg font-medium text-gray-700">Name</label>
+          <label htmlFor="name" className="block text-lg font-medium text-gray-700">
+            Name <span className="text-red-500">*</span>
+          </label>
           <Input
             type="text"
             placeholder="Enter your name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
           />
           {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
-          
-          <label htmlFor="email" className="block text-lg font-medium text-gray-700">Email</label>
+
+          <label htmlFor="email" className="block text-lg font-medium text-gray-700">
+            Email <span className="text-red-500">*</span>
+          </label>
           <Input
             type="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-          
-          <label htmlFor="password" className="block text-lg font-medium text-gray-700">Password</label>
+
+          <label htmlFor="password" className="block text-lg font-medium text-gray-700">
+            Password <span className="text-red-500">*</span>
+          </label>
           <Input
             type="password"
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
           {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-          
-          <label htmlFor="confirmPassword" className="block text-lg font-medium text-gray-700">Confirm Password</label>
+
+          <label htmlFor="confirmPassword" className="block text-lg font-medium text-gray-700">
+            Confirm Password <span className="text-red-500">*</span>
+          </label>
           <Input
             type="password"
             placeholder="Confirm your password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            required
           />
           {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
-          
           <div className="text-center">
-            <MainButton2 val="Sign Up" loading={loading} />
+            {loading ? (
+              <div className="flex items-center justify-center">
+                <div className="loader"></div>
+              </div>
+            ) : (
+              <MainButton2 val="Signup" />
+            )}
           </div>
         </form>
         <p className="mt-4 text-center">
@@ -140,3 +157,4 @@ const Signup = () => {
 };
 
 export default Signup;
+
