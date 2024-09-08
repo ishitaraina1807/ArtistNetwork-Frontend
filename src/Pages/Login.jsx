@@ -28,7 +28,7 @@ const Login = () => {
         payload: { name },
       });
       console.log("Navigating to /gallery");
-      navigate("/gallery");
+      navigate("/gallery"); // Ensure this is called after successful login
       setEmail("");
       setPassword("");
     } catch (err) {
@@ -59,7 +59,13 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className="text-center">
-            <MainButton2 val="Login" loading={loading} />
+          {loading ? (
+                <div className="flex items-center justify-center">
+                  <div className="loader"></div>
+                </div>
+              ) : (
+            <MainButton2 val="Login" />
+          )}
           </div>
         </form>
         <p className="mt-4 text-center">
